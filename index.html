@@ -22,25 +22,24 @@
     // 항상 컴포넌트의 변수 앞글자는 대문자로 (소문자로 할 경우 HTML 요소로 인식해서 렌더링 해버림)
     // 일반 바닐라 JS 의 경우 업데이트 시 HTML 요소가 업데이트 되지만 React의 경우는 바뀐 부분만 업데이트를 시켜줌 (Text형식)
     const root = document.getElementById("root");
-    let counter = 0;
-    function countUp() {
-      counter++;
-      render();
+
+    function setCount(counter) {
+      return counter++;
     }
 
-    function render() {
-      ReactDOM.render(<Container />, root);
-    }
-
-    function Container() {
+    function App() {
+      const [counter, modifier] = React.useState(0);
       return (
         <div>
-          <h3>Total clicks :{counter}</h3>
-          <button onClick={countUp}>Click Me</button>
-        </div>
-      );
-    }
-
-    render();
+          <h3>Total clicks : {counter}</h3>
+          <button onClick={()  => setCount(counter)}>
+            Click Me
+          </button>
+          </div>
+          );
+        }
+        
+    
+    ReactDOM.render(<App />, root);
   </script>
 </html>

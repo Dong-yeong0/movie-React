@@ -1,45 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-  <script
-    crossorigin
-    src="https://unpkg.com/react@17/umd/react.development.js"
-  ></script>
-  <script
-    crossorigin
-    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
-  ></script>
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-  <script type="text/babel">
-    // 항상 컴포넌트의 변수 앞글자는 대문자로 (소문자로 할 경우 HTML 요소로 인식해서 렌더링 해버림)
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel">
+  // 항상 컴포넌트의 변수 앞글자는 대문자로 (소문자로 할 경우 HTML 요소로 인식해서 렌더링 해버림)
     // 일반 바닐라 JS 의 경우 업데이트 시 HTML 요소가 업데이트 되지만 React의 경우는 바뀐 부분만 업데이트를 시켜줌 (Text형식)
+    
     const root = document.getElementById("root");
-
-    function setCount(counter) {
-      return counter++;
-    }
-
     function App() {
-      const [counter, modifier] = React.useState(0);
+        // re rendering / ["data", "modifier function"]
+        // modifier 함수를 가지고 state 변경 시 컴포넌트가 재생성 된다 (새로운 값을 들고 리렌더링)
+        // state랑 관련이 없는 값을 새로운 state로 할 때는 요렇게
+        //setCounter(counter + 1);
+        // state에 조금 변화를 주어 새로운  state를 주고싶을 때는 요렇게
+        //setCounter((current) => current + 1);
+
+        const [minutes, setMinutes] = React.useState();
+        const onChange = (e) => {
+          setMinutes(e.target.value);
+        }
+
       return (
+        /**
+         * todo JSX는 JS 확장 언어라서 HTML 약속어를 사용 못하기에 JSX만의 용어가 있음
+         * ? class => className / for => htmlFor
+         */
+        
         <div>
-          <h3>Total clicks : {counter}</h3>
-          <button onClick={()  => setCount(counter)}>
-            Click Me
-          </button>
-          </div>
+          <h1>Converter</h1>
+          <label htmlFor="minutes">Minutes</label>
+          <input 
+            value={minutes}
+            id="minutes"
+            type="number" 
+            placehorder="Minutes"
+            onChange={onChange}
+          />
+          <h4>You want to convert {minutes}</h4>
+          <label htmlFor="hours">Hours</label>
+          <input id="hours" type="number" placehorder="Hours" />
+
+        </div>
           );
         }
         
     
     ReactDOM.render(<App />, root);
   </script>
+
 </html>
